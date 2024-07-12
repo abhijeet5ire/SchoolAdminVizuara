@@ -24,6 +24,8 @@ import MultiStepProgressBar from "./ProgressBar";
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import generatePDF, { Resolution, Margin,Options } from "react-to-pdf";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 const options: Options = {
   filename: "vizuara.pdf",
   
@@ -51,9 +53,75 @@ const options: Options = {
      }
   },
 };
+const printDocument = async () => {
+  try {
+    const input = document.getElementById('one');
+    const secondContent = document.getElementById('two');
+    const finalContent = document.getElementById('three');
+    var img = new Image();
+  img.src = '/assets/1.png';
+
+
+
+
+    // Capture canvas for the first element
+    const canvas = await html2canvas(input);
+    const pdf = new jsPDF('l', 'mm', 'a3');
+    const imgData = canvas.toDataURL('image/png');
+
+    // Create jsPDF instance with portrait orientation
+
+
+
+    pdf.addImage(img, 'png',0,0 ,410, 300);
+    pdf.addPage();
+    // Add image to the first page
+
+  // Calculate dimensions to ensure the entire image fits on the PDF
+  const imgWidth = pdf.internal.pageSize.getWidth(); // Width of the PDF page
+  const imgHeight = canvas.height * imgWidth / canvas.width; // Maintain aspect ratio
+
+  
+  
+  // Add "Practical Completion By Teacher" text
+  pdf.setFontSize(16);
+  pdf.setFont('helvetica', 'bold'); // Set font to bold
+  pdf.text('Practical Completion By Teacher', imgWidth / 2, 20, { align: 'center' });
+  // Add image to center of the first page
+  pdf.addImage(canvas.toDataURL('image/png'), 'PNG', (imgWidth - 250) / 2, 40, 250, 250);
+
+    // Add second page with content from secondContent element
+    pdf.addPage();
+    const secondCanvas = await html2canvas(secondContent);
+    const secondImgData = secondCanvas.toDataURL('image/png');
+    const secondContentWidth = pdf.internal.pageSize.getWidth();
+    const secondContentHeight = secondCanvas.height * secondContentWidth / secondCanvas.width;
+    pdf.text('Lesson Completion By Teacher', imgWidth / 2, 20, { align: 'center' });
+    pdf.addImage(secondImgData, 'PNG', (imgWidth - 250) / 2, 40, 250, 250);
+
+    // Add final page with content from finalContent element
+    pdf.addPage();
+    const finalCanvas = await html2canvas(finalContent);
+    const finalImgData = finalCanvas.toDataURL('image/png');
+    const finalContentWidth = pdf.internal.pageSize.getWidth();
+    const finalContentHeight = finalCanvas.height * finalContentWidth / finalCanvas.width;
+    pdf.text('Quiz Completion By Teacher', imgWidth / 2, 20, { align: 'center' });
+    pdf.addImage(finalImgData, 'PNG', (imgWidth - 250) / 2, 40, 250, 250);
+    var img = new Image();
+    img.src = '/assets/2.png';
+    pdf.addImage(img, 'png',0,0 ,410, 300);
+    pdf.addPage();
+    // Save the PDF
+    pdf.save("download.pdf");
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    // Handle errors
+  }
+};
+
 
 const Dashboard = () => {
-  const getTargetElement = () => document.getElementById("container");
+  const getTargetElement = () => document.getElementById("test");
 
 const downloadPdf = () => generatePDF(getTargetElement, options);
   const theme = useTheme();
@@ -84,7 +152,7 @@ const downloadPdf = () => generatePDF(getTargetElement, options);
 
         <Box>
         <Button
-        onClick={downloadPdf}
+        onClick={printDocument}
         sx={{
           backgroundColor: colors.blueAccent[700],
           color: colors.grey[100],
@@ -179,7 +247,7 @@ backgroundColor={colors.primary[400]}
   >
     
     <iframe 
-    
+    id = 'test'
  style={{ 
   width: '100%',  // Make iframe fill the entire width of its container
   height: '100%', // Make iframe fill the entire height of its container
@@ -190,7 +258,7 @@ backgroundColor={colors.primary[400]}
   </Box>)}
 
           <Box
-          
+          id = 'one'
                     gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
                     gridRow="span 4"
                     backgroundColor={colors.primary[400]}
@@ -210,7 +278,7 @@ backgroundColor={colors.primary[400]}
 
 
         <Box
-         id="container"
+         id="two"
           gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
@@ -230,7 +298,7 @@ backgroundColor={colors.primary[400]}
         {/* ROW 3 */}
         
         <Box
-         id="container2"
+         id="three"
           gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
