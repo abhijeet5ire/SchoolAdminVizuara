@@ -85,26 +85,29 @@ const downloadPdf = () => generatePDF(getTargetElement, options);
         <Box>
         <Button
         onClick={downloadPdf}
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              marginRight:"16px",
-              padding: "10px 20px",
-            }}
+        sx={{
+          backgroundColor: colors.blueAccent[700],
+          color: colors.grey[100],
+          fontSize: "14px",
+          fontWeight: "bold",
+          padding: "10px 20px",
+          mb: { xs: "10px", md: "0" }, // Margin bottom for smaller screens
+          marginRight:'16px'
+        }}
           >
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
           <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
+        sx={{
+          backgroundColor: colors.blueAccent[700],
+          color: colors.grey[100],
+          fontSize: "14px",
+          fontWeight: "bold",
+          padding: "10px 20px",
+          mb: { xs: "10px", md: "0" }, // Margin bottom for smaller screens
+         
+        }}
             onClick={toExit}
           >
             <ExitToAppIcon sx={{ mr: "10px" }} />
@@ -150,9 +153,10 @@ const downloadPdf = () => generatePDF(getTargetElement, options);
           sx={{
             backgroundColor: colors.blueAccent[700],
             color: colors.grey[100],
-            fontSize: '14px',
-            fontWeight: 'bold',
-       
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            mb: { xs: "10px", md: "0" }, // Margin bottom for smaller screens
             marginRight:'16px'
           }}
         >
@@ -185,29 +189,29 @@ backgroundColor={colors.primary[400]}
  
   </Box>)}
 
-<Box
- 
-          gridColumn="span 4"
-          gridRow="span 4"
-          backgroundColor={colors.primary[400]}
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ padding: "30px 30px 0 30px" }}
-          >
-            Practical completion by teacher
-          </Typography>
-          <Box height="450px" mt="-20px"  >
-            {/* <BarChart isDashboard={true} /> */}
-            <BarChartAssignment isDashboard ={true}/>
-          </Box>
-        </Box>
+          <Box
+          
+                    gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
+                    gridRow="span 4"
+                    backgroundColor={colors.primary[400]}
+                  >
+                    <Typography
+                      variant="h5"
+                      fontWeight="600"
+                      sx={{ padding: "30px 30px 0 30px" }}
+                    >
+                      Practical completion by teacher
+                    </Typography>
+                    <Box height="500px" mt="-20px"  >
+                      {/* <BarChart isDashboard={true} /> */}
+                      <BarChartAssignment isDashboard ={true}/>
+                    </Box>
+                </Box>
 
 
         <Box
          id="container"
-          gridColumn="span 4"
+          gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
@@ -218,7 +222,7 @@ backgroundColor={colors.primary[400]}
           >
             Lesson Completion by teacher
           </Typography>
-          <Box height="450px" mt="-20px" >
+          <Box height="500px" mt="-20px"  >
             {/* <BarChart isDashboard={true} /> */}
             <BarChartLesson isDashboard ={true}/>
           </Box>
@@ -227,33 +231,39 @@ backgroundColor={colors.primary[400]}
         
         <Box
          id="container2"
-          gridColumn="span 4"
+          gridColumn={{ xs: "span 12", sm: "span 12", md: "span 12",xl:"span 4" }}
           gridRow="span 4"
           backgroundColor={colors.primary[400]}
         >
           <Typography
             variant="h5"
             fontWeight="600"
+         
             sx={{ padding: "30px 30px 0 30px" }}
           >
             Quiz completion by students
           </Typography>
-          <Box height="450px" mt="-20px">
+          <Typography
+            variant="h5"
+            fontWeight="600"
+         
+            sx={{ padding: "30px 30px 0 30px" }}
+          >
+          
+          </Typography>
+          <Box height="500px" mt="-20px">
             {/* <BarChart isDashboard={true} /> */}
             <BarCharSchool selectedSchool={selectedSchool} isDashboard ={true}/>
           </Box>
         </Box>
+
       </Box>
-      <Box
-      
-  gridColumn="span 4"
-  gridRow="span 4"
-  backgroundColor={colors.primary[400]}
-  mt={'24px'}
-  position="relative"  // Ensure parent Box has relative positioning
->
-  
-</Box>
+     
+
+
+
+
+
 
     </Box>
   );
