@@ -23,36 +23,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import MultiStepProgressBar from "./ProgressBar";
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import generatePDF, { Resolution, Margin,Options } from "react-to-pdf";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-const options: Options = {
-  filename: "vizuara.pdf",
-  
-  
-  page: {
-     // margin is in MM, default is Margin.NONE = 0
-     margin: Margin.SMALL,
-     // default is 'A4'
-     format: 'letter',
-     // default is 'portrait'
-     orientation: 'landscape',
-  },
 
-  // Customize any value passed to the jsPDF instance and html2canvas
-  // function. You probably will not need this and things can break, 
-  // so use with caution.
-  overrides: {
-     // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
-     pdf: {
-        compress: true
-     },
-     // see https://html2canvas.hertzen.com/configuration for more options
-     canvas: {
-        useCORS: true
-     }
-  },
-};
 const printDocument = async () => {
   try {
     const input = document.getElementById('one');
@@ -128,7 +101,6 @@ const printDocument = async () => {
 const Dashboard = () => {
   const getTargetElement = () => document.getElementById("test");
 
-const downloadPdf = () => generatePDF(getTargetElement, options);
   const theme = useTheme();
   const navigate = useNavigate();
   const colors = tokens(theme.palette.mode);
