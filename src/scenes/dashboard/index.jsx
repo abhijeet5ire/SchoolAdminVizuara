@@ -110,7 +110,12 @@ const printDocument = async () => {
     var img = new Image();
     img.src = '/assets/2.png';
     pdf.addImage(img, 'png',0,0 ,410, 300);
-    pdf.addPage();
+
+  pdf.addPage();
+  var endimg = new Image();
+  endimg.src = '/assets/endpage.png';
+  pdf.addImage(endimg, 'png',0,0 ,410, 300);
+  
     // Save the PDF
     pdf.save("download.pdf");
   } catch (error) {
